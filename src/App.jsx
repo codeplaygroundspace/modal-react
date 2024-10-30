@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  function handleModalToggle() {
+    setIsModalOpen((isModalOpen) => !isModalOpen);
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Modal isOpen={isModalOpen} handleModalToggle={handleModalToggle} />
+      <Button handleModalToggle={handleModalToggle}>Show modal 1</Button>
+      <Button handleModalToggle={handleModalToggle}>Show modal 1</Button>
+      <Button handleModalToggle={handleModalToggle}>Show modal 1</Button>
     </>
-  )
+  );
 }
 
-export default App
+const Modal = ({ isOpen, handleModalToggle }) => {
+  if (!isOpen) return null;
+
+  return (
+    <>
+      <div className="modal">
+        <button className="close-modal" onClick={handleModalToggle}>
+          &times;
+        </button>
+        <h1>I am a modal window 😍</h1>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </div>
+      <div className="overlay" onClick={handleModalToggle}></div>
+    </>
+  );
+};
+
+const Button = ({ children, handleModalToggle }) => {
+  return (
+    <button className="show-modal" onClick={handleModalToggle}>
+      {children}
+    </button>
+  );
+};
